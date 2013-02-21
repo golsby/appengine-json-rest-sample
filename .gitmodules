@@ -1,3 +1,0 @@
-[submodule "appengine_json_rest"]
-	path = appengine_json_rest
-	url = git@github.com:golsby/appengine-json-rest.git

@@ -15,4 +15,4 @@ class Fruit(db.Model):
     modified_time = db.TimeProperty(required=True, auto_now=True, auto_now_add=True)
 
 
-thingy = create_application('rest', models = [Fruit])
+simple = create_application('simple', models = [Fruit])

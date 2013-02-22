@@ -11,3 +11,6 @@ libraries:
 handlers:
 - url: /simple.*
   script: main.simple
+
+- url: /private.*
+  script: main.private

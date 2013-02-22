@@ -1,8 +1,10 @@
 import packages # required for AppEngine to find third-party packages.
 from google.appengine.ext import db
 import datetime
+import base64
 
 from appengine_json_rest.appengine_json_rest import create_application
+from appengine_json_rest.appengine_json_rest.errors import AuthenticationFailedError, AuthenticationRequiredError
 
 
 class Fruit(db.Model):
@@ -21,4 +23,27 @@ class Fruit(db.Model):
     touched_dates = db.ListProperty(datetime.datetime)
 
 
-simple = create_application('simple', models = [Fruit])
+simple = create_application('simple', models=[Fruit])
+
+
+def basic_auth(request):
+    authorized = {
+        'naive': 'pa$sw0rd'
+    }
+
+    auth_header = request.headers.get("Authorization")
+
+    if not auth_header:
+        raise AuthenticationRequiredError("Authorization Required")
+
+    if not auth_header.startswith('Basic '):
+        raise AuthenticationRequiredError("Basic Authorization Required")
+
+    decoded = base64.b64decode(auth_header[6:])
+    (user, pwd) = decoded.split(':')
+    if authorized.get(user) != pwd:
+        raise AuthenticationFailedError()
+
+    pass
+
+private = create_application('private', auth_func=basic_auth)

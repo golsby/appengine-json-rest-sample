@@ -46,4 +46,4 @@ def basic_auth(request):
 
     pass
 
-private = create_application('private', auth_func=basic_auth)
+# private = create_application('private', auth_func=basic_auth)

@@ -3,7 +3,7 @@ from google.appengine.ext import db
 import datetime
 import base64
 
-from appengine_json_rest.appengine_json_rest import create_application
+from appengine_json_rest.appengine_json_rest.application import JSONApplication
 from appengine_json_rest.appengine_json_rest.errors import AuthenticationFailedError, AuthenticationRequiredError
 
 
@@ -23,8 +23,7 @@ class Fruit(db.Model):
     touched_dates = db.ListProperty(datetime.datetime)
 
 
-simple = create_application('simple', models=[Fruit])
-
+simple = JSONApplication('simple', models=[Fruit])
 
 def basic_auth(request):
     authorized = {
@@ -46,4 +45,4 @@ def basic_auth(request):
 
     pass
 
-# private = create_application('private', auth_func=basic_auth)
+private = JSONApplication('private', models=[Fruit], auth_func=basic_auth)

@@ -38,9 +38,12 @@ def basic_auth(request):
     if not auth_header.startswith('Basic '):
         raise AuthenticationRequiredError("Basic Authorization Required")
 
-    decoded = base64.b64decode(auth_header[6:])
-    (user, pwd) = decoded.split(':')
-    if authorized.get(user) != pwd:
+    try:
+        decoded = base64.b64decode(auth_header[6:])
+        (user, pwd) = decoded.split(':')
+        if authorized.get(user) != pwd:
+            raise AuthenticationFailedError()
+    except:
         raise AuthenticationFailedError()
 
     pass

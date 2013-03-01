@@ -32,6 +32,7 @@ class Fruit(db.Model):
 
 simple = JSONApplication('simple', models=[Fruit, Basket])
 
+
 def basic_auth(request):
     authorized = {
         'naive': 'pa$sw0rd'
